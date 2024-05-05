@@ -34,4 +34,21 @@ public class StorageServiceApplication {
 				.body(imageData);
 
 	}
+
+	@PostMapping("/fileSystem")
+	public ResponseEntity<?> uploadImageToFIleSystem(@RequestParam("image")MultipartFile file) throws IOException {
+		String uploadImage = service.uploadImageToFileSystem(file);
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(uploadImage);
+	}
+
+	@GetMapping("/fileSystem/{fileName}")
+	public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName) throws IOException {
+		byte[] imageData=service.downloadImageFromFileSystem(fileName);
+		return ResponseEntity.status(HttpStatus.OK)
+				.contentType(MediaType.valueOf("image/png"))
+				.body(imageData);
+
+	}
+
 }
